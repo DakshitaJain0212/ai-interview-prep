@@ -5,7 +5,7 @@ import { db } from "@/firebase/admin";
 import { getRandomInterviewCover } from "@/lib/utils";
 
 export async function POST(request: Request) {
-  const { type, role, level, techstack, amount, userid } = await request.json();
+  const { type, role, level, techstack, amount, company, userid } = await request.json();
 
   try {
     const { text: questions } = await generateText({
@@ -16,6 +16,7 @@ export async function POST(request: Request) {
         The tech stack used in the job is: ${techstack}.
         The focus between behavioural and technical questions should lean towards: ${type}.
         The amount of questions required is: ${amount}.
+        Is there a specific company you're targeting for?: ${company}
         Please return only the questions, without any additional text.
         The questions are going to be read by a voice assistant so do not use "/" or "*" or any other special characters which might break the voice assistant.
         Return the questions formatted like this:
@@ -30,6 +31,7 @@ export async function POST(request: Request) {
       type: type,
       level: level,
       techstack: techstack.split(","),
+      company: company,
       questions: JSON.parse(questions),
       userId: userid,
       finalized: true,

@@ -41,7 +41,15 @@ export const getTechLogos = async (techArray: string[]) => {
   return results;
 };
 
-export const getRandomInterviewCover = () => {
-  const randomIndex = Math.floor(Math.random() * interviewCovers.length);
-  return `/covers${interviewCovers[randomIndex]}`;
+export const getRandomInterviewCover = (company?: string) => {
+  console.log(company);
+  if (!company) return "/covers/hostinger.png";
+
+  const normalizedCompany = company.toLowerCase().trim();
+
+  if (interviewCovers.includes(normalizedCompany)) {
+    return `/covers/${normalizedCompany}.png`;
+  }
+
+  return "/covers/hostinger.png";
 };

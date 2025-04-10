@@ -6,25 +6,27 @@ import { Button } from "./ui/button";
 import DisplayTechIcons from "./DisplayTechIcons";
 
 import { cn, getRandomInterviewCover } from "@/lib/utils";
-// import { getFeedbackByInterviewId } from "@/lib/actions/general.action";
+import { getFeedbackByInterviewId } from "@/lib/actions/general.action";
 
 const InterviewCard = async ({
   interviewId,
-//   userId,
+  userId,
   role,
   type,
   techstack,
+  company,
   createdAt,
 }: InterviewCardProps) => {
-//   const feedback =
-//     userId && interviewId
-//       ? await getFeedbackByInterviewId({
-//           interviewId,
-//           userId,
-//         })
-//       : null;
 
-const feedback = null as Feedback | null;
+  console.log("company", company);
+
+  const feedback =
+    userId && interviewId
+      ? await getFeedbackByInterviewId({
+          interviewId,
+          userId,
+        })
+      : null;
 
   const normalizedType = /mix/gi.test(type) ? "Mixed" : type;
 
@@ -55,7 +57,7 @@ const feedback = null as Feedback | null;
 
           {/* Cover Image */}
           <Image
-            src={getRandomInterviewCover()}
+            src={getRandomInterviewCover(company)}
             alt="cover-image"
             width={90}
             height={90}
